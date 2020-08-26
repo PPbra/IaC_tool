@@ -1,0 +1,44 @@
+{
+    "ec2":{
+        "name":"main",
+        "instance_type":"t2.nano",
+        "_comment":"ami_name,resource_name required",
+        "ami_name":"ubuntu",
+        "tags":"\"Name=This is the test Name Tags\"",
+        "ebs":"ebs_name"
+    },
+    "ebs":{
+        "name":"ebs_name",
+        "size":8,
+        "region":"ap-southeast-2"
+    },
+    "vpc":{
+        "name":"main_vpc",
+        "cidr_block":"10.0.0.0/24"
+    },
+    "aws_internet_gateway":{
+        "name":"main",
+        "vpc_id":"aws_vpc.main.id"
+    },
+    "aws_subnet":{
+        "name":"main",
+        "vpc_id":"aws_vpc.main.id",
+        "cidr_block":"10.1.1.0/24",
+        "availability_zone":"ap-southeast-2a"
+    },
+    "aws_route_table" :{
+        "name":"main",
+        "vpc_id":"aws_vpc.main.id",
+        "route": {
+            "cidr_block" :"0.0.0.0/0",
+            "gateway_id" :"aws_internet_gateway.main.id"
+        }
+    },
+    "aws_route_table_association" :{
+        "name":"default_table",
+        "subnet_id" : "aws_subnet.main.id",
+        "route_table_id" : "aws_route_table.default.id"
+    }
+} 
+
+
