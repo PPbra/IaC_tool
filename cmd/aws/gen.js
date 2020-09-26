@@ -3,7 +3,7 @@ const readline = require("readline-sync");
 const commander = require("commander");
 
 //const { ec2 } = require("../../config/aws/config");
-const aws_gen = require("../../config/aws/config");
+const aws_gen = require("../../config/aws");
 
 const fs = require("fs");
 
@@ -16,7 +16,10 @@ try {
     const config_path = !!commander.file?commander.file:"";
     const config = JSON.parse(fs.readFileSync(config_path));
     let terraform_code =
-    `${(!!config.ec2)?aws_gen.ec2.generator(config.ec2):""}
+    `provider "aws" {
+        region = "ap-southeast-2"
+    }
+    ${(!!config.ec2)?aws_gen.ec2.generator(config.ec2):""}
     ${(!!config.ebs)?aws_gen.ebs.generator(config.ebs):""}
     ${(!!config.vpc)?aws_gen.vpc.generator(config.vpc):""}
     ${(!!config.aws_internet_gateway)?aws_gen.aws_internet_gateway.generator(config.aws_internet_gateway):""}
