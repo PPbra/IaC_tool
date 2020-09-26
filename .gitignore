@@ -102,3 +102,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+cmd/aws/.terraform/
+cmd/gcp/.terraform/
+cmd/aws/.terraform/plugins/darwin_amd64/terraform-provider-aws_v3.7.0_x5
