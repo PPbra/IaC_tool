@@ -1,7 +1,7 @@
 provider "aws" {
         region = "ap-southeast-2"
     }
-    data "aws_ami" "ubuntu" { 
+data "aws_ami" "ubuntu" { 
     most_recent = true
     owners=["*"]
     filter {
@@ -9,6 +9,7 @@ provider "aws" {
     values = ["ubuntu*"]
     }
 }
+
 resource "aws_instance" "main" {
     ami           = data.aws_ami.ubuntu.id
     instance_type = "t2.nano"

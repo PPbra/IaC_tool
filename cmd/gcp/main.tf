@@ -19,13 +19,6 @@ resource "google_compute_instance" "test-name" {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
     metadata = {
         ssh-keys = "mingphuong:${file("./gpc.pub")}"
     }

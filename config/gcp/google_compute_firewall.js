@@ -1,7 +1,5 @@
-const { config } = require("../aws/ec2")
-
 module.exports =  {
-    generator: ()=>{
+    generator: (config)=>{
         return (
 `
 resource "google_compute_firewall" "${!!config.name?config.name:"default_firewall"}" {

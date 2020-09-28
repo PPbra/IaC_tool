@@ -3,15 +3,15 @@ module.exports = {
             return (
 `
 resource "google_compute_instance" "${!!config.name?config.name:"default"}" {
-      name = "${!!config.name?config.name:"default"}"
-      machine_type = "${!!config.machine_type?config.machine_type:"f1-micro"}"
-      zone         = "${!!config.zone?config.zone:"us-west1-a"}"
+    name = "${!!config.name?config.name:"default"}"
+    machine_type = "${!!config.machine_type?config.machine_type:"f1-micro"}"
+    zone         = "${!!config.zone?config.zone:"us-west1-a"}"
       
     boot_disk {
           initialize_params {
-          image = "${!!config.os?config.os:"debian-cloud/debian-9"}"
+          image = "${!!config.image?config.image:"debian-cloud/debian-9"}"
         }
-     }
+    }
     network_interface {
         network = google_compute_network.${!!config.vpc?config.vpc:"vpc"}.name
         subnetwork = google_compute_subnetwork.${!!config.subnet?config.subnet:"public_subnet_1"}.name

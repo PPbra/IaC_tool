@@ -1,7 +1,5 @@
-const { config } = require("../aws/ec2")
-
 module.exports = {
-    generator : ()=>{
+    generator : (config)=>{
         return (
 `resource "google_compute_subnetwork" "${!!config.name?config.name:"default_subnet"}" {
     name = "${!!config.name?config.name:"default_subnet"}"
@@ -13,7 +11,7 @@ module.exports = {
     ${!!config.private_ip_google_access?`private_ip_google_access = "${config.private_ip_google_access}"`:``}
     ${!!config.secondary_ip_range?`secondary_ip_range = "${config.secondary_ip_range}"`:``}
     ${!!config.description?`description = "${config.description}"`:``}
-  }`
+}\n`
         )
     }
 }

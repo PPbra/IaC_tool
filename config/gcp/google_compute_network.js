@@ -1,8 +1,6 @@
-const { config } = require("../aws/ec2")
-
 module.exports = {
-    generator :()=>{
-        reuturn (
+    generator :(config)=>{
+        return (
 `resource "google_compute_network" "${!!config.name?config.name:"vpc"}" {
     name = "${!!config.name?config.name:"vpc"}"
     ${!!config.auto_create_subnetworks?`auto_create_subnetworks = "${config.auto_create_subnetworks}"`:``}
