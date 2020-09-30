@@ -1,5 +1,5 @@
 //terrafrom version ^3.*.*
-const ec2  = require("./ec2");
+const ec2  = require("./aws_instance");
 const vpc  = require("./vpc");
 const aws_internet_gateway  = require("./aws_internet_gateway");
 const aws_route_table  = require("./aws_route_table");
