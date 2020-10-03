@@ -3,7 +3,8 @@ module.exports = {
         return(
 `
 resource  "aws_internet_gateway" "${(!!config.name)?config.name:"main"}" {
-    vpc_id =  ${(!!config.vpc_id)?config.vpc_id:"aws_vpc.main.id"}
+    vpc_id = aws_vpc.${config.aws_vpc}.id
+    ${!!config.tags?`tags = {${config.tags}}`:``}}
 }
 `
         )

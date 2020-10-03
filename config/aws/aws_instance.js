@@ -43,10 +43,13 @@ resource "aws_instance" "${(!!config.name)?config.name:"Default_name"}" {
     }
 }
 ${!!config.aws_network_interface_attachment?`
-    instance_id          = aws_instance.${config.aws_network_interface_attachment.aws_instance}.id
+resource "aws_network_interface_attachment" "network-att-${config.name}" {
+    instance_id          = aws_instance.${config.name}.id
     network_interface_id = aws_network_interface.${config.network_interface}}.id
     device_index         = 0
+  }
 `:``}
+
 ${(!!config.ebs)?`
 resource "aws_volume_attachment" "volume-att-${config.name}"{
     device_name = "/dev/sdc"

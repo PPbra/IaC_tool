@@ -20,12 +20,11 @@ module.exports = {
         cidr_block = "0.0.0.0/0"
         from_port = 0
         to_port = 0
-
     }
 
-    tags = {
-        Name = "tf-acl-aws"
-    }
+        tags = {
+            Name = "tf-acl-aws"
+        }
     }
 
     resource "aws_security_group" "allowall" {
