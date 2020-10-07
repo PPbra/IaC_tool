@@ -1,7 +1,9 @@
+
 provider "aws" {
-        region = "ap-southeast-2"
-    }
-data "aws_ami" "ubuntu" { 
+    region = "ap-southeast-2"
+}
+
+data "aws_ami" "ami-main_instance" { 
     most_recent = true
     owners=["*"]
     filter {
@@ -9,104 +11,97 @@ data "aws_ami" "ubuntu" {
     values = ["ubuntu*"]
     }
 }
-
-resource "aws_instance" "main" {
-    ami           = data.aws_ami.ubuntu.id
-    instance_type = "t2.nano"
+resource "aws_instance" "main_instance" {
+    ami           = data.aws_ami.ami-main_instance.id
+    instance_type = "t2.micro"
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     tags = {
-    Name="This is the test Name Tags"
-}
+    Name="Main instance test"
+    }
 }
 
-resource "aws_volume_attachment" "volume-att-main"{
+
+
+resource "aws_volume_attachment" "volume-att-main_instance"{
     device_name = "/dev/sdc"
-    volume_id = aws_ebs_volume.ebs_name.id
-    instance_id = aws_instance.main.id
+    volume_id = aws_ebs_volume.main_instance_ebs.id
+    instance_id = aws_instance.main_instance.id
 }
 
-    resource "aws_ebs_volume" "ebs_name" {
+resource "aws_ebs_volume" "main_instance_ebs" {
     availability_zone = "ap-southeast-2"
     size = 8
-    tags = {
-        Name = "Default ebs_volume"
-}
+    
+    
+    
+    
+    
+    
+    
+    
 }               
 
-    
+
 resource "aws_vpc" "main_vpc" {
     cidr_block       = "10.0.0.0/16"
-    instance_tenancy = "default"  
-    tags = {
-        Name = "This is the test VPC!"
-    }
-}
-
     
-resource  "aws_internet_gateway" "main" {
-    vpc_id =  aws_vpc.main_vpc.id
+    
+    
+    
+    
+    
+    tags = {Name="The Main vpc"}
 }
 
-    resource "aws_subnet" "main" {
+
+resource  "aws_internet_gateway" "main_int" {
+    vpc_id = aws_vpc.main_vpc.id
+    
+}
+
+resource "aws_subnet" "main_subnet" {
     vpc_id = aws_vpc.main_vpc.id
     cidr_block = "10.1.1.0/24"
-    availability_zone = "ap-southeast-2a"
+    
+    
+    
+    
+    
+    
 }
-    resource "aws_route_table" "main" {
-    vpc_id = "aws_vpc.main_vpc.id"
+resource "aws_route_table" "main_route" {
+    vpc_id = aws_vpc.main_vpc.id
     route {
         cidr_block = "0.0.0.0/0"
-        gateway_id = "aws_internet_gateway.main.id"
-}
-}
-    resource "aws_route_table_association" "default_table" {
-    subnet_id = aws_subnet.main.id
-    route_table_id = aws_route_table.main.id
-}
-    resource "aws_network_acl" "allowall" {
-    vpc_id = aws_vpc.main_vpc.id
-
-    egress {
-        protocol = "-1"
-        rule_no = 100
-        action = "allow"
-        cidr_block = "0.0.0.0/0"
-        from_port = 0 
-        to_port =  0
-    }
-
-    ingress {
-        protocol = "-1"
-        rule_no  = 200
-        action = "allow"
-        cidr_block = "0.0.0.0/0"
-        from_port = 0
-        to_port = 0
-
-    }
-
-    tags = {
-        Name = "tf-acl-aws"
-    }
-    }
-
-    resource "aws_security_group" "allowall" {
-    name = "SG allow all"
-    description  = "Allow all traffic - naughty"
-    vpc_id = aws_vpc.main_vpc.id
-
-    ingress {
-        from_port = 22
-        to_port = 22
-        protocol = "tcp"
-        cidr_blocks  = ["0.0.0.0/0"]
-    }
-
-    egress {
-        from_port = 0 
-        to_port = 0 
-        protocol = "-1"
-        cidr_blocks = ["0.0.0.0/0"]
+        gateway_id = aws_internet_gateway.main_int.id
     }
 }
-
-    
+resource "aws_route_table_association" "route_association" {
+    subnet_id = aws_subnet.main_subnet.id
+    route_table_id = aws_route_table.main_route.id
+}
