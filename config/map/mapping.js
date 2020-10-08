@@ -1,5 +1,0 @@
-const mapping = {
-    
-}
-
-module.exports = {}

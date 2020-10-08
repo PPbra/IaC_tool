@@ -70,7 +70,9 @@
                 "aws_route_table":"main_route"
             }
         }
-    ]
+    ],
+    "comment":{
+        "ami":"ubuntu or CentOS"
+    }
 } 
-
 

@@ -13,10 +13,32 @@
         },
         {
             "type":"instance",
-            "name":"",
+            "name":"main_instance",
+            "instance_type":"micro",
             "os":"ubuntu",
             "network":"default_network",
-            "disk":"disl_1"
+            "disk":"disk_1"
+        },
+        {
+            "type":"firewall",
+            "name":"deault_firewall",
+            "ports":[
+                {
+                    "port":"80",
+                    "action":"allow",
+                    "protocol":"tcp"
+                },
+                {
+                    "port":"3309",
+                    "action":"allow",
+                    "protocol":"tcp"
+                },
+                {
+                    "port":"8080",
+                    "action":"allow",
+                    "protocol":"tcp"
+                }
+            ]
         }
     ]
 }
