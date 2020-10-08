@@ -1,0 +1,22 @@
+{
+    "resources":[
+        {
+            "type":"network",
+            "name":"default_network",
+            "location":""
+        },
+        {
+            "type":"storage",
+            "name":"disk_1",
+            "size":"16",
+            "disk_type":"ssh"
+        },
+        {
+            "type":"instance",
+            "name":"",
+            "os":"ubuntu",
+            "network":"default_network",
+            "disk":"disl_1"
+        }
+    ]
+}

@@ -1,16 +1,16 @@
 module.exports = {
     generator: (config)=>{
         return (
-`data "aws_ami" "ubuntu" { 
+`data "aws_ami" "ami-${config.name}" { 
     most_recent = true
-    owners=["*"]
+    owners=["099720109477"]
     filter {
     name   = "name"
-    values = ["${(!!config.ami_name)?config.ami_name:"ubuntu"}*"]
+    values = ["${(!!config.aws_ami)?config.aws_ami:"ubuntu"}*"]
     }
 }
 resource "aws_instance" "${(!!config.name)?config.name:"Default_name"}" {
-    ami           = data.aws_ami.ubuntu.id
+    ami           = data.aws_ami.ami-${config.name}.id
     instance_type = "${(!!config.instance_type)?config.instance_type:"t2.micro"}"
     ${!!config.availability_zone?`availability_zone = "${config.availability_zone}"`:``}
     ${!!config.placement_group?`placement_group = "${config.placement_group}"`:``}
@@ -50,10 +50,10 @@ resource "aws_network_interface_attachment" "network-att-${config.name}" {
   }
 `:``}
 
-${(!!config.ebs)?`
+${(!!config.aws_ebs_volume)?`
 resource "aws_volume_attachment" "volume-att-${config.name}"{
     device_name = "/dev/sdc"
-    volume_id = aws_ebs_volume.${config.ebs}.id
+    volume_id = aws_ebs_volume.${config.aws_ebs_volume}.id
     instance_id = aws_instance.${config.name}.id
 }
 `:""}`)

@@ -1,8 +1,7 @@
 provider "google" {
-        project     = "operating-rush-280308"
-        region      = "us-west1"
-    }
-    
+    project     = "operating-rush-280308"
+    region      = "us-west1"
+}
 resource "google_compute_instance" "test-name" {
     name = "test-name"
     machine_type = "f1-micro"
@@ -17,6 +16,13 @@ resource "google_compute_instance" "test-name" {
         network = google_compute_network.vpc.name
         subnetwork = google_compute_subnetwork.public-subnet-1.name
     }
+    
+    
+    
+    
+    
+    
+    
     
     
     metadata = {

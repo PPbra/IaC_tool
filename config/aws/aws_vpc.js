@@ -10,7 +10,7 @@ resource "aws_vpc" "${(!!config.name)?config.name:"main"}" {
     ${!!config.enable_classiclink?`enable_classiclink = ${config.enable_classiclink}`:``}
     ${!!config.enable_classiclink_dns_support?`enable_classiclink_dns_support = ${config.enable_classiclink_dns_support}`:``}
     ${!!config.assign_generated_ipv6_cidr_block?`assign_generated_ipv6_cidr_block = ${config.assign_generated_ipv6_cidr_block}`:``}
-    ${!!config.tags?`tags = ${config.tags}`:``}
+    ${!!config.tags?`tags = {${config.tags}}`:``}
 }
 `
 )

@@ -13,11 +13,7 @@ commander.parse(process.argv);
 try {
     const config_path = !!commander.file?commander.file:"";
     const config = JSON.parse(fs.readFileSync(config_path));
-    var terraform_code = `provider "google" {
-        project     = "operating-rush-280308"
-        region      = "us-west1"
-    }
-    `
+    var terraform_code = `${gcp_gen.provider.generator(config.provider)}`;
     config.resources.map((e)=>{
         if(e.type = "resource"){
             terraform_code += gcp_gen[e.resource].generator(e.config)

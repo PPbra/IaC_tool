@@ -1,4 +1,8 @@
 {
+    "provider":{
+        "project":"operating-rush-280308",
+        "region":"us-west1"
+    },
     "resources":[
         {
             "type":"resource",

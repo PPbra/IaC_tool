@@ -39,6 +39,10 @@ resource "google_compute_instance" "${!!config.name?config.name:"default"}" {
     ${!!config.enable_display?`enable_display = "${config.enable_display }"`:``}
     ${!!config.resource_policies?`resource_policies = "${config.resource_policies }"`:``}
     }
+    ${!!config.google_compute_disk?`resource "google_compute_attached_disk" "disk_att_${config.name}" {
+        disk     = google_compute_disk.${config.google_compute_disk}.id
+        instance = google_compute_instance.${config.name}.id
+      }`:``}
 `                
             )
         }
