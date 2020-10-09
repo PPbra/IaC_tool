@@ -1,7 +1,7 @@
-const map = require("../../config/map");
+const map_config = require("../map-config");
 
 const mapping = (config)=>{
-    return generator(map.instance.mapAttribute(config))
+    return generator(map_config.instance.aws(config))
 };
 
 const generator = (config)=>{
@@ -48,11 +48,13 @@ ${(!!config.tags)?config.tags:`Name="Default Instance"`}
 }
 }
 ${!!config.aws_network_interface?`
-resource "aws_network_interface_attachment" "network-att-${config.name}" {
-instance_id          = aws_instance.${config.name}.id
-network_interface_id = aws_network_interface.${config.aws_network_interface}}.id
-device_index         = 0
-}
+resource "aws_network_interface" "interface_${config.name}" {
+    subnet_id       = aws_subnet.${config.aws_network_interface.aws_subnet}.id
+    attachment {
+      instance     = aws_instance.${config.name}.id
+      device_index = 1
+    }
+  }
 `:``}
 
 ${(!!config.aws_ebs_volume)?`

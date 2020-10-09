@@ -58,16 +58,8 @@
                 "route":{
                     "cidr_block":"0.0.0.0/0",
                     "aws_internet_gateway":"main_int"
-                }
-            }
-        },
-        {
-            "type":"resource",
-            "resource":"aws_route_table_association",
-            "config":{
-                "name":"route_association",
-                "aws_subnet":"main_subnet",
-                "aws_route_table":"main_route"
+                },
+                "aws_subnet":"main_subnet"
             }
         }
     ],
