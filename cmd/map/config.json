@@ -1,9 +1,9 @@
 {
+    "zone":"",
     "resources":[
         {
             "type":"network",
-            "name":"default_network",
-            "location":""
+            "name":"default_network"
         },
         {
             "type":"storage",
