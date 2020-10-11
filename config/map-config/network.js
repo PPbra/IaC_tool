@@ -5,8 +5,11 @@ const aws = (config)=>{
     }
 }
 
+
 const gcp = ()=>{
-    
+    return {
+        name:config.name
+    }  
 }
 
 module.exports = {

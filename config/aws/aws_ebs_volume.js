@@ -10,7 +10,7 @@ module.exports = {
     ${!!config.multi_attach_enabled?`multi_attach_enabled = {${config.multi_attach_enabled}}`:``}
     ${!!config.snapshot_id?`snapshot_id = {${config.snapshot_id}}`:``}
     ${!!config.outpost_arn?`outpost_arn = {${config.outpost_arn}}`:``}
-    ${!!config.type?`outpost_arn = {${config.type}}`:``}
+    ${!!config.volume_type?`outpost_arn = {${config.volume_type}}`:``}
     ${!!config.kms_key_id?`kms_key_id = {${config.kms_key_id}}`:``}
 }               
 `)

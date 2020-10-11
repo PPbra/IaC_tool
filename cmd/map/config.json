@@ -8,8 +8,9 @@
         {
             "type":"storage",
             "name":"disk_1",
-            "size":"16",
-            "disk_type":"ssh"
+            "size":16,
+            "disk_type":"ssd",
+            "zone":""
         },
         {
             "type":"instance",
@@ -24,17 +25,17 @@
             "name":"deault_firewall",
             "ports":[
                 {
-                    "port":"80",
+                    "port":80,
                     "action":"allow",
                     "protocol":"tcp"
                 },
                 {
-                    "port":"3309",
+                    "port":3309,
                     "action":"allow",
                     "protocol":"tcp"
                 },
                 {
-                    "port":"8080",
+                    "port":8080,
                     "action":"allow",
                     "protocol":"tcp"
                 }
