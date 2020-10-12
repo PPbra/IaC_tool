@@ -1,5 +1,5 @@
 {
-    "zone":"",
+    "region":"",
     "resources":[
         {
             "type":"network",
@@ -20,6 +20,13 @@
             "network":"default_network",
             "disk":"disk_1"
         },
+        {
+            "type":"subnet",
+            "network":"default_network",
+            "name":"subnet_1",
+            "cidr_block":"10.1.1.0/16"
+        }
+        ,
         {
             "type":"firewall",
             "name":"deault_firewall",

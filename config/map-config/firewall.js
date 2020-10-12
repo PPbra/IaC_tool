@@ -3,7 +3,7 @@ const aws = (config)=>{
 }
 
 const gcp = (config) =>{
-
+    
 }
 
 

@@ -4,7 +4,6 @@ const typeFilter = (type,cloud)=>{
         if(type == 'ssh'){
             return "gp2"
         }
-
         if (type == "hdd") {
             return "sc1"
         }
@@ -14,7 +13,6 @@ const typeFilter = (type,cloud)=>{
             if(type == 'ssh'){
                 return "pd-balanced"
             }
-    
             if (type == "hdd") {
                 return "pd-standard"
             }
