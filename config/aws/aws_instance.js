@@ -7,12 +7,12 @@ const mapping = (config)=>{
 const generator = (config)=>{
     return (
 `data "aws_ami" "ami-${config.name}" { 
-most_recent = true
-owners=["${config.ami=="ubuntu"?"099720109477":"679593333241"}"]
-filter {
-name   = "name"
-values = ["${(!!config.aws_ami)?config.aws_ami:"ubuntu"}*"]
-}
+  most_recent = true
+  owners=["${config.ami=="ubuntu"?"099720109477":"679593333241"}"]
+  filter {
+    name   = "name"
+    values = ["${(!!config.aws_ami)?config.aws_ami:"ubuntu"}*"]
+  }
 }
 resource "aws_instance" "${(!!config.name)?config.name:"Default_name"}" {
 ami           = data.aws_ami.ami-${config.name}.id

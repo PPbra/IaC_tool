@@ -1,6 +1,6 @@
-module.exports = {
-    generator:(config)=>{
-        return(
+const map_config = require("../map-config/subnet");
+const generator = (config)=>{
+return(
 `resource "aws_subnet" "${(!!config.name)?config.name:"main"}" {
     vpc_id = aws_vpc.${config.aws_vpc}.id
     cidr_block = "${(!!config.cidr_block)?config.cidr_block:"10.1.1.0/24"}"
@@ -11,6 +11,11 @@ module.exports = {
     ${!!config.assign_ipv6_address_on_creation?`assign_ipv6_address_on_creation = ${config.assign_ipv6_address_on_creation}`:``}
     ${!!config.tags?`tags = ${config.tags}`:``}
 }`
-        )
-    }
+    )
+}
+
+const mapping = config=>generator(map_config.aws(config));
+
+module.exports = {
+    generator,mapping
 }

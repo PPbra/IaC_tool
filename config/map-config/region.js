@@ -124,10 +124,8 @@ const aws = [
 //             {
 //                 location:"brazil",
 //                 code:"southamerica-east1-c"
-//             }
-            
+//             }        
 //         ]
-
 //     },
 //     {
 //         location:"europe",
@@ -146,7 +144,6 @@ const aws = [
 //                 location:"england",
 //                 code:"europe-west2-c"
 //             },
-
 //             {
 //                 location:"germany",
 //                 code:"europe-west3-a"

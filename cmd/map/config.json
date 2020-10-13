@@ -1,5 +1,5 @@
 {
-    "region":"",
+    "location":"usa",
     "resources":[
         {
             "type":"network",
@@ -10,7 +10,7 @@
             "name":"disk_1",
             "size":16,
             "disk_type":"ssd",
-            "zone":""
+            "zone":"usa"
         },
         {
             "type":"instance",
@@ -30,23 +30,18 @@
         {
             "type":"firewall",
             "name":"deault_firewall",
-            "ports":[
-                {
-                    "port":80,
-                    "action":"allow",
-                    "protocol":"tcp"
-                },
-                {
-                    "port":3309,
-                    "action":"allow",
-                    "protocol":"tcp"
-                },
-                {
-                    "port":8080,
-                    "action":"allow",
-                    "protocol":"tcp"
-                }
-            ]
+            "allows":
+                [
+                    {"protocol":"https","ports":[80,8080]},
+                    {"protocol":"tcp","ports":[89,3309]}
+                ]
+            ,
+            "denies":
+                [
+                    {"protocol":"https","ports":[81,8081]},
+                    {"protocol":"tcp","ports":[81,3301]}
+                ]
+            
         }
     ]
 }
