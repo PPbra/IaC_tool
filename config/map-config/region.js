@@ -201,7 +201,7 @@ const getZone  = (location,cloud)=>{
     }
     else{
         if(cloud == "aws"){
-            return aws.find(element => element.location == location).code;
+            return aws.find(element => element.location == location).code+"a";
         }
     }
 }
@@ -212,7 +212,7 @@ const getRegion = (location,cloud)=>{
     }
     else{
         if(cloud == "aws"){
-            return aws.find(element => element.location == location).code+"a";
+            return aws.find(element => element.location == location).code;
         }
     }
 }

@@ -12,7 +12,7 @@ module.exports = {
 resource "aws_route_table_association" "association_${config.name}" {
     subnet_id = aws_subnet.${config.aws_subnet}.id
     route_table_id = aws_route_table.${config.name}.id
-}
+}\n
 `
         )
     }

@@ -1,4 +1,4 @@
-const map_config =  require("../map-config/storage");
+// const map_config =  require("../map-config/storage");
 const generator = (config)=>{
     return (
 `resource "aws_ebs_volume" "${(!!config.name)?config.name:"main_ebs"}" {
@@ -12,11 +12,11 @@ const generator = (config)=>{
     ${!!config.outpost_arn?`outpost_arn = {${config.outpost_arn}}`:``}
     ${!!config.volume_type?`outpost_arn = {${config.volume_type}}`:``}
     ${!!config.kms_key_id?`kms_key_id = {${config.kms_key_id}}`:``}
-}               
+}\n               
 `)
 }
 
-const mapping = config=>generator(map_config.aws(config));
+// const mapping = config=>generator(map_config.aws(config));
 
 module.exports = {
     generator

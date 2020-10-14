@@ -1,4 +1,4 @@
-const map_config = require("../map-config/subnet");
+// const map_config = require("../map-config/subnet");
 const generator = (config)=>{
 return(
 `resource "aws_subnet" "${(!!config.name)?config.name:"main"}" {
@@ -10,7 +10,7 @@ return(
     ${!!config.outpost_arn?`outpost_arn = ${config.outpost_arn}`:``}
     ${!!config.assign_ipv6_address_on_creation?`assign_ipv6_address_on_creation = ${config.assign_ipv6_address_on_creation}`:``}
     ${!!config.tags?`tags = ${config.tags}`:``}
-}`
+}\n`
     )
 }
 

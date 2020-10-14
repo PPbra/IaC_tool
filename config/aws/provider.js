@@ -4,7 +4,7 @@ module.exports = {
 `
 provider "aws" {
     region = "${config.region}"
-}
+}\n
 `
         )
     }

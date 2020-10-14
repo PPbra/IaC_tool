@@ -1,3 +1,5 @@
+const google_compute_disk = require("../gcp/google_compute_disk");
+const aws_ebs_volume = require("../aws/aws_ebs_volume");
 
 const typeFilter = (type,cloud)=>{
     if(cloud == "aws"){
@@ -21,22 +23,25 @@ const typeFilter = (type,cloud)=>{
 }
 
 const aws = (config)=>{
-    return {
+    const code =aws_ebs_volume.generator({
         name:config.name,
         zone:config.zone,
         size:config.size,
         volume_type:typeFilter(config.type,'aws')
-    }
+    });
+    return  code;
 }
 
 const gcp = (config) =>{
-    return {
+    const code = google_compute_disk.generator({
         name:config.name,
         availability_zone:config.zone,
         size:config.size,
         volume_type:typeFilter(config.type,'gcp')
-    }
+    });
+    return code;
 }
+
 
 module.exports = {
     aws, gcp

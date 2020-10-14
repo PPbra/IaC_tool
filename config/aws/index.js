@@ -3,7 +3,6 @@ const aws_instance  = require("./aws_instance");
 const aws_vpc  = require("./aws_vpc");
 const aws_internet_gateway  = require("./aws_internet_gateway");
 const aws_route_table  = require("./aws_route_table");
-const aws_route_table_association  = require("./aws_route_table_association");
 const aws_subnet  = require("./aws_subnet");
 const aws_network_acl  = require("./aws_network_acl");
 const aws_ebs_volume  = require("./aws_ebs_volume");
@@ -13,7 +12,6 @@ module.exports = {
                     aws_ebs_volume,
                     aws_internet_gateway,
                     aws_route_table,
-                    aws_route_table_association,
                     aws_subnet,aws_network_acl
                     ,provider
                 }

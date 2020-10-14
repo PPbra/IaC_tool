@@ -106,3 +106,5 @@ dist
 cmd/aws/.terraform/
 cmd/gcp/.terraform/
 cmd/aws/.terraform/plugins/darwin_amd64/terraform-provider-aws_v3.7.0_x5
+cmd/map/gcp/.terraform/
+cmd/map/aws/.terraform/
