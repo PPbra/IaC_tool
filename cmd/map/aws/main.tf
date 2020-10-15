@@ -189,7 +189,7 @@ ingress {
 
 data "aws_ami" "ami-main_instance" { 
   most_recent = true
-  owners=["679593333241"]
+  owners = ["679593333241"]
   filter {
     name   = "name"
     values = ["ubuntu*"]
@@ -240,7 +240,7 @@ resource "aws_network_interface" "interface_main_instance" {
 
 
 
-resource "aws_volume_attachment" "volume-att-main_instance"{
+resource "aws_volume_attachment" "volume-att-main_instance" {
     device_name = "/dev/sdc"
     volume_id = aws_ebs_volume.disk-1.id
     instance_id = aws_instance.main_instance.id

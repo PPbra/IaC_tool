@@ -100,7 +100,7 @@ const aws = [
     {
         location:"brazil",
         code:"sa-east-1"
-    },
+    }
 ]
 
 
@@ -195,6 +195,13 @@ const aws = [
 //     },
 // ]
 
+const getLocation = (text,cloud)=>{
+    if(cloud == "aws"){
+        const location = aws.find(e=>{ return text.includes(e.code)}).location;
+        return location;
+    }
+}
+
 const getZone  = (location,cloud)=>{
     if(cloud == "gcp"){
         return gcp.find(element => element.location == location).code;
@@ -217,4 +224,4 @@ const getRegion = (location,cloud)=>{
     }
 }
 
-module.exports = {getRegion,getZone};
+module.exports = {getRegion,getZone,getLocation};

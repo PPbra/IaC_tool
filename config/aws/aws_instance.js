@@ -2,7 +2,7 @@ const generator = (config)=>{
     return (
 `data "aws_ami" "ami-${config.name}" { 
   most_recent = true
-  owners=["${config.ami=="ubuntu"?"099720109477":"679593333241"}"]
+  owners = ["${config.ami=="ubuntu"?"099720109477":"679593333241"}"]
   filter {
     name   = "name"
     values = ["${(!!config.aws_ami)?config.aws_ami:"ubuntu"}*"]
@@ -52,7 +52,7 @@ resource "aws_network_interface" "interface_${config.name}" {
 `:``}
 
 ${(!!config.aws_ebs_volume)?`
-resource "aws_volume_attachment" "volume-att-${config.name}"{
+resource "aws_volume_attachment" "volume-att-${config.name}" {
     device_name = "/dev/sdc"
     volume_id = aws_ebs_volume.${config.aws_ebs_volume}.id
     instance_id = aws_instance.${config.name}.id

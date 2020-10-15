@@ -28,7 +28,7 @@ resource "google_compute_firewall" "allow-${!!config.name?config.name:"default_f
   ${!!config.target_tags?`target_tags = "${config.target_tags}"`:``}
   ${!!config.project?`project = "${config.project}"`:``}
   ${!!config.enable_logging?`enable_logging = "${config.enable_logging}"`:``}
-  ${configCode(config.allows)}
+  ${!!config.allows?configCode(config.allows):''}
 }\n
 
 resource "google_compute_firewall" "deny-${!!config.name?config.name:"default_firewall"}" {
@@ -47,7 +47,7 @@ resource "google_compute_firewall" "deny-${!!config.name?config.name:"default_fi
   ${!!config.target_tags?`target_tags = "${config.target_tags}"`:``}
   ${!!config.project?`project = "${config.project}"`:``}
   ${!!config.enable_logging?`enable_logging = "${config.enable_logging}"`:``}
-  ${configCode(config.denies)}
+  ${!!config.denies?configCode(config.denies):""}
 }\n
 `
   )
