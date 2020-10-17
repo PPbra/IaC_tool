@@ -16,8 +16,9 @@ cidr_block       = "10.0.0.0/16"
 }
 
 resource "aws_ebs_volume" "disk-1" {
-    availability_zone = "ap-southeast-2"
+    availability_zone = "usa"
     size = 16
+    type = "gp2"
     
     
     

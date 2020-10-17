@@ -1,8 +1,192 @@
 
 provider "aws" {
-    region = "ap-southeast-2"
+    region = "us-east-1"
 }
 
+
+resource "aws_vpc" "default-network" {
+cidr_block       = "10.0.0.0/16"
+
+
+
+
+
+
+
+}
+
+resource "aws_ebs_volume" "disk-1" {
+    availability_zone = "usa"
+    size = 16
+    type = "gp2"
+    
+    
+    
+    
+    
+    
+    
+    
+}
+               
+resource "aws_subnet" "subnet-1" {
+    vpc_id = aws_vpc.default-network.id
+    cidr_block = "10.1.0.0/16"
+    
+    
+    
+    
+    
+    
+}
+resource "aws_network_acl" "deault-firewall" {
+    vpc_id = aws_vpc.default-network.id
+    
+egress {
+    protocol = "https"
+    rule_no = 100
+    action = "allow"
+    
+    from_port = 80 
+    to_port =  80
+}
+
+ingress {
+    protocol = "https"
+    rule_no = 100
+    action = "allow"
+    
+    from_port = 80 
+    to_port =  80
+}
+        
+egress {
+    protocol = "https"
+    rule_no = 100
+    action = "allow"
+    
+    from_port = 8080 
+    to_port =  8080
+}
+
+ingress {
+    protocol = "https"
+    rule_no = 100
+    action = "allow"
+    
+    from_port = 8080 
+    to_port =  8080
+}
+        
+egress {
+    protocol = "tcp"
+    rule_no = 100
+    action = "allow"
+    
+    from_port = 89 
+    to_port =  89
+}
+
+ingress {
+    protocol = "tcp"
+    rule_no = 100
+    action = "allow"
+    
+    from_port = 89 
+    to_port =  89
+}
+        
+egress {
+    protocol = "tcp"
+    rule_no = 100
+    action = "allow"
+    
+    from_port = 3309 
+    to_port =  3309
+}
+
+ingress {
+    protocol = "tcp"
+    rule_no = 100
+    action = "allow"
+    
+    from_port = 3309 
+    to_port =  3309
+}
+        
+egress {
+    protocol = "https"
+    rule_no = 100
+    action = "deny"
+    
+    from_port = 81 
+    to_port =  81
+}
+
+ingress {
+    protocol = "https"
+    rule_no = 100
+    action = "deny"
+    
+    from_port = 81 
+    to_port =  81
+}
+        
+egress {
+    protocol = "https"
+    rule_no = 100
+    action = "deny"
+    
+    from_port = 8081 
+    to_port =  8081
+}
+
+ingress {
+    protocol = "https"
+    rule_no = 100
+    action = "deny"
+    
+    from_port = 8081 
+    to_port =  8081
+}
+        
+egress {
+    protocol = "tcp"
+    rule_no = 100
+    action = "deny"
+    
+    from_port = 81 
+    to_port =  81
+}
+
+ingress {
+    protocol = "tcp"
+    rule_no = 100
+    action = "deny"
+    
+    from_port = 81 
+    to_port =  81
+}
+        
+egress {
+    protocol = "tcp"
+    rule_no = 100
+    action = "deny"
+    
+    from_port = 3301 
+    to_port =  3301
+}
+
+ingress {
+    protocol = "tcp"
+    rule_no = 100
+    action = "deny"
+    
+    from_port = 3301 
+    to_port =  3301
+}
+        
+}
 
 data "aws_ami" "ami-main_instance" { 
   most_recent = true
@@ -14,50 +198,52 @@ data "aws_ami" "ami-main_instance" {
 }
 resource "aws_instance" "main_instance" {
     ami           = data.aws_ami.ami-main_instance.id
-    instance_type = "t2.micro"    
+    instance_type = "t2.micro"
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     tags = {
-        Name = "Main instance test"
-    }
+    Name="Default Instance"
+  }
 }
 
-resource "aws_volume_attachment" "volume-att-main_instance" { 
+resource "aws_network_interface" "interface_main_instance" {
+    subnet_id       = aws_subnet.subnet-1.id
+    attachment {
+      instance     = aws_instance.main_instance.id
+      device_index = 1
+    }
+  }
+
+
+
+
+resource "aws_volume_attachment" "volume-att-main_instance" {
     device_name = "/dev/sdc"
-    volume_id = aws_ebs_volume.main_instance_ebs.id
+    volume_id = aws_ebs_volume.disk-1.id
     instance_id = aws_instance.main_instance.id
 }
-
-resource "aws_ebs_volume" "main_instance_ebs" {
-    availability_zone = "ap-southeast-2"
-    size = 8    
-}
-resource "aws_vpc" "main_vpc" {
-    cidr_block       = "10.0.0.0/16"
-}
-
-
-
-resource  "aws_internet_gateway" "main_int" {
-    vpc_id = aws_vpc.main_vpc.id
-}
-
-
-resource "aws_subnet" "main_subnet" {
-    vpc_id = aws_vpc.main_vpc.id
-    cidr_block = "10.1.1.0/24"
-}
-
-resource "aws_route_table" "main_route" {
-    vpc_id = aws_vpc.main_vpc.id
-    route {
-        cidr_block = "0.0.0.0/0"
-        gateway_id = aws_internet_gateway.main_int.id
-    }
-}
-
-resource "aws_route_table_association" "association_main_route" {
-    subnet_id = aws_subnet.main_subnet.id
-    route_table_id = aws_route_table.main_route.id
-}
-
-
 

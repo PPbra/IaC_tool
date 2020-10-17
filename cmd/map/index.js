@@ -18,8 +18,8 @@ try {
     let awsCode = `${mapping_config.provider.aws(config)}`;
     config.resources = sortResources(config.resources,"map");
     config.resources.map(resource=>{
-        gcpCode+=mapping_config[resource.resource].gcp(resource)
-        awsCode+=mapping_config[resource.resource].aws(resource)
+        gcpCode+=mapping_config[resource.resource].gcp(resource);
+        awsCode+=mapping_config[resource.resource].aws(resource);
     })
 
     fs.writeFile("./gcp/main.tf",gcpCode,(error)=>{

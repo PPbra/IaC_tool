@@ -9,7 +9,7 @@
             "resource":"storage",
             "name":"disk-1",
             "size":16,
-            "disk_type":"ssd",
+            "storage_type":"ssd",
             "zone":"usa"
         },
         {

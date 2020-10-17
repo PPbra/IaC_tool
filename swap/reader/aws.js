@@ -26,6 +26,7 @@ const read = (file_path)=>{
         let isInsideIngress = false;
         let isInsideFilter = false;
         let isInsideTag = false;    
+        let isInsideAttachment = false;
     
         const lines = removeCommentLine(textData.split("\n"));
     
@@ -39,7 +40,7 @@ const read = (file_path)=>{
             if(!isInsideResource&&characterInLine.includes("resource")){
                 const resource = {};
                 resource.cloudType = characterInLine[1].toString();
-                resource.type = "resource"
+                resource.resourceType = "resource"
                 resource.name = characterInLine[2].toString();
                 isInsideResource = true;
                 resources.push(resource);
@@ -47,7 +48,7 @@ const read = (file_path)=>{
     
             if(!isInsideProvider&&!isInsideResource&&characterInLine.includes("provider")){
                 const provider = {};
-                provider.type = "provider"
+                provider.resourceType = "provider"
                 isInsideProvider = true;
                 provider.cloudType = "provider";
                 provider.cloud = characterInLine[1];
@@ -56,7 +57,7 @@ const read = (file_path)=>{
     
             if(!isInsideData&&!isInsideResource&&!isInsideProvider&&characterInLine.includes("data")){
                 const data = {};
-                data.type = "data"
+                data.resourceType = "data"
                 isInsideData = true;
                 data.cloudType = characterInLine[1];
                 data.name = characterInLine[2];
@@ -117,22 +118,62 @@ const read = (file_path)=>{
                                 }
                                 if(characterInLine[0]=="egress"){
                                     isInsideEgress = true;
-                                    resources[k][characterInLine[0]]= {}
+                                    if((typeof resources[k].egress)!="object"){
+                                        resources[k].egress = [{}];
+                                    }else{
+                                        resources[k].egress.push({});                               
+                                    }
                                 }
                                 if(characterInLine[0]=="ingress"){
                                     isInsideIngress = true;
-                                    resources[k][characterInLine[0]]= {}
+                                    
+                                    if((typeof resources[k].ingress)!="object"){
+                                        resources[k].ingress = [{}];
+                                    }else{
+                                        resources[k].ingress.push({});                               
+                                    }
+                                }
+
+                                if(characterInLine[0]== "attachment"){
+                                    isInsideAttachment = true;
+                                    resources[k].attachment = {}
                                 }
                             }
                         }
                     }
     
                     if(countBraces==2&&isInsideEgress&&characterInLine.includes("=")){
-                        resources[k]["egress"][characterInLine[0]]=characterInLine[2]
+
+                        if(characterInLine.includes("protocol")){
+                            resources[k].egress[resources[k].egress.length-1].protocol = characterInLine[2];
+                        }
+                        if(characterInLine.includes("action")){
+                            resources[k].egress[resources[k].egress.length-1].action = characterInLine[2];
+                        }
+                        if(characterInLine.includes("from_port")){
+                            resources[k].egress[resources[k].egress.length-1].from_port = characterInLine[2];
+                        }
+                        if(characterInLine.includes("to_port")){
+                            resources[k].egress[resources[k].egress.length-1].to_port = characterInLine[2];
+                        }
                     }
+
+                    if(countBraces==2&&isInsideAttachment&&characterInLine.includes("=")){
+                        resources[k]["attachment"][characterInLine[0]] = characterInLine[2];                    }
     
                     if(countBraces==2&&isInsideIngress&&characterInLine.includes("=")){
-                        resources[k]["ingress"][characterInLine[0]]=characterInLine[2]
+                        if(characterInLine.includes("protocol")){
+                            resources[k].ingress[resources[k].egress.length-1].protocol = characterInLine[2];
+                        }
+                        if(characterInLine.includes("action")){
+                            resources[k].ingress[resources[k].egress.length-1].action = characterInLine[2];
+                        }
+                        if(characterInLine.includes("from_port")){
+                            resources[k].ingress[resources[k].egress.length-1].from_port = characterInLine[2];
+                        }
+                        if(characterInLine.includes("to_port")){
+                            resources[k].ingress[resources[k].egress.length-1].to_port = characterInLine[2];
+                        }
                     }
     
                     if(countBraces==2&&isInsideRoute&&characterInLine.includes("=")){
@@ -156,6 +197,8 @@ const read = (file_path)=>{
                 isInsideEgress = false;
                 isInsideIngress = false;
                 isInsideFilter = false;
+                isInsideIngress = false;
+                isInsideAttachment = false;
             }
     
             if(countBraces==0){

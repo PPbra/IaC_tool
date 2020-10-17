@@ -15,11 +15,12 @@ resource "google_compute_network" "default-network" {
 
 resource "google_compute_disk" "disk-1" {
     name  = "disk-1"
+
+    type = "pd-balanced"
     
     
     
-    
-    
+    zone = "usa"
     
     
     

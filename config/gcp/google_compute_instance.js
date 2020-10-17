@@ -12,7 +12,7 @@ resource "google_compute_instance" "${!!config.name?config.name:"default"}" {
         }
     }
     network_interface {
-        network = google_compute_network.${!!config.google_compute_network?config.google_compute_network:"vpc"}.name
+        ${!!config.google_compute_network?`network = google_compute_network.${config.google_compute_network}.name`:``}
         subnetwork = google_compute_subnetwork.${!!config.google_compute_subnetwork?config.google_compute_subnetwork:"public_subnet_1"}.name
     }
 
