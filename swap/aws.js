@@ -4,6 +4,7 @@ const aws_reader =  require("./reader/aws");
 const region_map_config =  require("../config/map-config/region");
 const sortResources = require("../config/sort-resources");
 const mapGen = require("../cmd/map/index");
+const storage_map_config = require("../config/map-config/storage");
 
 commander
     .option("-f,--file <path to file>","path to tf file");
@@ -169,7 +170,7 @@ try{
                 storage.name = removeDoubleQuote(e.name);
                 storage.size = e.size;
                 storage.zone = removeDoubleQuote(e.availability_zone);
-                storage.disk_type = removeDoubleQuote(e.type) ;
+                storage.storage_type = storage_map_config.getDiskType(removeDoubleQuote(e.type),"aws");
                 storages.push(storage);
             }
             if(removeDoubleQuote(e.cloudType) == "aws_subnet"){
@@ -202,7 +203,9 @@ try{
     connectNetworks(instances,networks,subnetworks,networkAtts);
     checkFirewalls(firewalls);
     const config = getMapConfig(provider,instances,networks,subnetworks,storages,firewalls);
-    mapGen.getCode(config);
+    const code = mapGen.getCode(config);
+    console.log(config)
+    console.log(code.aws.toString());
 }catch(error){
     console.log(error);
 }

@@ -1,9 +1,9 @@
 const google_compute_disk = require("../gcp/google_compute_disk");
 const aws_ebs_volume = require("../aws/aws_ebs_volume");
-const REGIOn = require("./region");
+const REGION = require("./region");
 
 const typeFilter = (type,cloud)=>{
-    console.log(type,cloud)
+    // console.log(type,cloud)
     if(cloud == "aws"){
         if(type == 'ssd'){
             return "gp2"
@@ -24,11 +24,32 @@ const typeFilter = (type,cloud)=>{
     }
 }
 
+const getDiskType  = (type,cloud) =>{
+    if(cloud == "aws"){
+        if(type == 'gp2'){
+            return "ssd"
+        }
+        if (type == "sc1") {
+            return "hdd"
+        }
+
+    }else{
+        if(cloud == "gcp"){
+            if(type == 'pd-balanced'){
+                return "ssd"
+            }
+            if (type == "pd-standard") {
+                return "hdd"
+            }
+        }
+    }
+}
+
 const aws = (config)=>{
-    // console.log(config);
+    // console.log(REGION.getRegion(config.zone,"aws"));
     const code = aws_ebs_volume.generator({
         name:config.name,
-        availability_zone:config.zone,
+        availability_zone:REGION.getZone(config.zone,"aws"),
         size:config.size,
         type:typeFilter(config.storage_type,'aws')
     });
@@ -39,7 +60,7 @@ const gcp = (config) =>{
     // console.log(config);
     const code = google_compute_disk.generator({
         name:config.name,
-        zone:config.zone,
+        zone:REGION.getZone(config.zone,"gcp"),
         size:config.size,
         type:typeFilter(config.storage_type,'gcp')
     });
@@ -48,5 +69,5 @@ const gcp = (config) =>{
 
 
 module.exports = {
-    aws, gcp
+    aws, gcp, getDiskType
 }

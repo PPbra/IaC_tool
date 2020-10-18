@@ -203,6 +203,8 @@ const getLocation = (text,cloud)=>{
 }
 
 const getZone  = (location,cloud)=>{
+    console.log(location);
+
     if(cloud == "gcp"){
         return gcp.find(element => element.location == location).code;
     }

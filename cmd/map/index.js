@@ -15,7 +15,6 @@ getCode = (config)=>{
     let gcpCode = `${mapping_config.provider.gcp(config)}`;
     let awsCode = `${mapping_config.provider.aws(config)}`;
     config.resources = sortResources(config.resources,"map");
-    console.log(config);
     config.resources.map(resource=>{
         gcpCode+=mapping_config[resource.resource].gcp(resource);
         awsCode+=mapping_config[resource.resource].aws(resource);

@@ -1,5 +1,4 @@
 const generator = (config)=>{
-    // console.log(config.type)
     return(
 `
 resource "google_compute_disk" "${config.name}" {

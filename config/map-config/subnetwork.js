@@ -7,7 +7,7 @@ const aws = (config)=>{
         name:config.name,
         aws_vpc:config.network,
         cidr_block:config.cidr_block,
-        availability_zone:region_map_config.getZone(config.location)
+        // availability_zone:region_map_config.getZone(config.location,"aws")
     });
     return code;
 }
@@ -18,7 +18,7 @@ const gcp = (config) =>{
         name:config.name,
         ip_cidr_range:config.cidr_block,
         google_compute_network:config.network,
-        region:region_map_config.getRegion(config.location)
+        // region:region_map_config.getRegion(config.location,"gcp")
     })
     return code;
 }

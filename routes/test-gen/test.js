@@ -13,7 +13,6 @@ const rl  = readline.createInterface({
 
 var hello = "a"
 const dosomething = ()=>{
-    console.log("hahaha!");
     rl.question("aws_ami name?",(hello_input)=>{
         hello = hello_input
     })
