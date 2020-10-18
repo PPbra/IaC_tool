@@ -1,4 +1,4 @@
-const subnet = require("./map-config/subnet");
+const subnet = require("./map-config/subnetwork");
 
 
 
@@ -94,7 +94,7 @@ const sortResources = (resources,cloudType)=>{
                 return
             }
 
-            if(resource.resource == "subnet"){
+            if(resource.resource == "subnetwork"){
                 resource.point = 1;
                 return
             }

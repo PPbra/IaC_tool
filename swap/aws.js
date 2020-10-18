@@ -2,6 +2,8 @@
 const commander = require("commander");
 const aws_reader =  require("./reader/aws");
 const region_map_config =  require("../config/map-config/region");
+const sortResources = require("../config/sort-resources");
+const mapGen = require("../cmd/map/index");
 
 commander
     .option("-f,--file <path to file>","path to tf file");
@@ -32,9 +34,10 @@ const connectStorages = (instances,storages,storageAtts) =>{
     })
 } 
 
+
 const connectNetworks = (instances,networks,subnetworks,networkAtts)=>{
     networkAtts.forEach(e=>{
-
+        
         if(networks.find(network=>network.name == networkAtts.network)){
             instances.forEach(instance=>{
                 if(e.instance == instance.name){
@@ -52,7 +55,7 @@ const connectNetworks = (instances,networks,subnetworks,networkAtts)=>{
                 }
             })
         }else{
-            console.log(`Your ${e.subnet} subnetwork is not refferered to any resource!`)
+            console.log(`Your ${e.network} subnetwork is not refferered to any resource!`)
         }
     })
 }
@@ -69,18 +72,20 @@ const checkFirewalls = (firewalls)=>{
                     allows.protocols[protocol_name].ports.push(protocol.from_port);
                 }
                 if(!!!allows.protocols[protocol_name]&&removeDoubleQuote(protocol.action)=="allow"){
-                    allows.protocols[protocol_name] = {protocol:protocol_name,ports:[]}
+                    allows.protocols[protocol_name] = {protocol:protocol_name,ports:[protocol.from_port]}
                 }
                 if(!!denies.protocols[protocol_name]&&removeDoubleQuote(protocol.action)=="deny"){
                     denies.protocols[protocol_name].ports.push(protocol.from_port);
                 }
                 if(!!!denies.protocols[protocol_name]&&removeDoubleQuote(protocol.action)=="deny"){
-                    denies.protocols[protocol_name] = {protocol:protocol_name,ports:[]}
+                    denies.protocols[protocol_name] = {protocol:protocol_name,ports:[protocol.from_port]}
                 }
             })
         }
-        e.allows = allows;
-        e.denies = denies;
+        // console.log(Object.keys(allows.protocols).map(e=>allows.protocols[e]));
+        e.allows = Object.keys(allows.protocols).map(e=>allows.protocols[e])
+        e.denies = Object.keys(denies.protocols).map(e=>denies.protocols[e])
+        // console.log(e);
     })
 
 
@@ -88,7 +93,17 @@ const checkFirewalls = (firewalls)=>{
 
 
 const getMapConfig = (provider,instances,networks,subnetworks,storages,firewalls)=>{
-    console.log(provider);
+    const config = {location:provider.location};
+    const resources = [];
+
+    instances.map(e=>resources.push(e));
+    networks.map(e=>resources.push(e));
+    subnetworks.map(e=>resources.push(e));
+    storages.map(e=>resources.push(e));
+    firewalls.map(e=>resources.push(e));
+    config.resources = sortResources.sortResources(resources,"map");
+    
+    return config;
 }
 
 
@@ -100,7 +115,6 @@ try{
     const rawResources = aws_reader.read(file_path);
     // console.log(rawResources);
     const provider = {}
-    const config = {};
     const networks = [];
     const instances = [];
     const storages = [];
@@ -184,13 +198,11 @@ try{
         }    
     })
 
-    connectStorages(instances,storages,storageAtts)
+    connectStorages(instances,storages,storageAtts);
     connectNetworks(instances,networks,subnetworks,networkAtts);
-    checkFirewalls(firewalls)
-
-    getMapConfig(provider,instances,networks,subnetworks,storages);
-
-    
+    checkFirewalls(firewalls);
+    const config = getMapConfig(provider,instances,networks,subnetworks,storages,firewalls);
+    mapGen.getCode(config);
 }catch(error){
     console.log(error);
 }

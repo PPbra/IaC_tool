@@ -3,7 +3,7 @@ const storage = require("./storage");
 const network = require("./network");
 const firewall = require("./firewall");
 const region = require("./region");
-const subnet = require("./subnet");
+const subnet = require("./subnetwork");
 const provider = require("./provider");
 
 module.exports = {
